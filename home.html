@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TOLLR</title>
+<link href="styles/style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .ng-camera-stack {
+            position: relative;
+        }
+        .ng-camera-overlay {
+            left: 0;
+            position: absolute;
+            top: 0;
+            z-index: 2;
+        }
+        .ng-camera-countdown{
+            display: none;
+        }
+    </style>
+</head>
+
+<body ng-app="Tollr" ng-view  ng-controller="Home as vm">
+<div ng-hide="logged">
+    <div>
+        <div><img src="images/bg.jpg" width="100%" height="100%" /></div>
+        <div class="frmBox">
+            <div><img src="images/logoBig.png" /></div>
+            <div class="inpFrm">
+                <form name="user">
+                    <input type="text" placeholder="Employee id" name="employee_id" class="inpTxt" ng-model="employee_id" ng-required="true" />
+                    <input type="password" placeholder="Password" name="password" class="inpTxt" ng-model="password"  ng-required="true" />
+                    <input type="submit" class="inpBtn" value="Login" ng-click="user.$valid && Login()"/>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div ng-show="logged">
+<div id="header" >
+	<div class="logo"><img src="images/logo.png" width="119" height="61" /></div>
+
+    <div class="info">{{TollName}}<br />{{RoadName}}, {{TollLocation}}<br />Tollable Length : {{TollKm}} Km(s)</div>
+    <div class="timeandlogin" ng-controller="Ctrl2">
+        <div class="timeanddate"><span class="date" my-current-time="dateformat"></span><br/><span class="time"
+                                                                                                   my-current-time="format"></span>
+        </div>
+        <div class="login" ng-style="{'background-color':logincolor}" set-class-when-at-top="fix-to-top"><img src="images/user.png" width="48" height="47"/></div>
+        <div class="profile-slide-down" ng-mouseenter="changeColor('black')" ng-mouseleave="changeColor('')">
+            <span class="time" ng-cloak>{{username}}</span>
+            <span><span class="button" ng-click="signOut()">SIGN OUT</span></span>
+        </div>
+    </div>
+
+    <!--<div class="timeandlogin">
+    	<div class="timeanddate"><span class="date">28 Oct, 2015</span><br /><span class="time">14:48:56</span></div>
+        <div class="login"><img src="images/user.png" width="48" height="47" /></div>
+  	</div>-->
+</div>
+<div id="vehicles-list-panel">
+	<div class="vehicles-list vehicles-list-heading">
+    	<div><span><h1>Arriving Vehicles List</h1></span> <span style="float:right; margin-top:-10px;"><form><input class="txt-fld" name="serachWord" ng-model="searchWord" placeholder="Enter Vehicle Number" type="text" /><input type="button" class="subm" value="SEARCH" ng-click="SearchVehicle()"/></form></span></div>
+    </div>    
+    <div class="vehicles-list" >
+    	<div class="vehicles-list-header">
+        	<div class="vehicles-list-header-data">Vehicle No.</div>
+            <div class="vehicles-list-header-data">Vehicle Type</div>
+            <div class="vehicles-list-header-data">Vehicle Axel</div>
+            <!--<div class="vehicles-list-header-data">Vehicle Weight (Kg)</div>-->
+        </div>
+    </div>
+    <div class="vehicles-list-th all-vehicles"  >
+        <div class="vehicles-list-content" ng-repeat="vehic in vehicles" ng-click="ShowDetails(vehic)">
+        	<div class="vehicles-list-content-data">{{vehic.registration_no}}</div>
+            <div class="vehicles-list-content-image"><img  src="images/{{VehicalImage(vehic.vechical_type_id)}}" width="72" height="50" alt="{{vehic.vechical_type_id}}" /></div>
+            <div class="vehicles-list-content-data">2</div>
+            <!--<div class="vehicles-list-content-data">1015</div>-->
+        </div>
+
+    </div>
+</div>
+<div id="information-panel">
+	<div class="cam-feed">
+        <ng-camera
+                capture-message="Cheeeese!"
+                output-height="160"
+                output-width="213"
+                viewer-height="320"
+                viewer-width="450"
+                image-format="jpeg"
+                jpeg-quality="100"
+                action-message="Take picture"
+                snapshot="vm.picture"
+                flash-fallback-url="js/webcam.swf"
+                overlay-url="images/overlay.png"
+                shutter-url="images/shutter.mp3"
+        ></ng-camera>
+
+    </div>
+    <div class="information">
+        <form name="ve">
+       	<div class="info-pad">
+            <div class="info-block">
+                <div class="v-number1">Vehicle No</div>
+                <div class="v-number2">:</div>
+                <div class="v-number3"><strong ng-show="NOTTOLLERED">{{registration_number}}</strong><input ng-hide="NOTTOLLERED" name="registration_number" ng-model="registration_number" /></div>
+                <div style="clear:both;"></div>       
+            </div>
+            <div class="info-block">
+                <div class="v-number1">Vehicle Type</div>
+                <div class="v-number2">:</div>
+                <div class="v-number3"><strong ng-show="NOTTOLLERED" >{{vehical_type}}</strong><input ng-hide="NOTTOLLERED" name="vehical_type" ng-model="vehical_type" /></div>
+                <div style="clear:both;"></div>       
+            </div>
+            <div class="info-block">
+                <div class="v-number1">Vehicle Axel</div>
+                <div class="v-number2">:</div>
+                <div class="v-number3"><strong >2</strong></div>
+                <div style="clear:both;"></div>        
+            </div>
+            <div class="info-block">
+                <div class="v-number1">Vehicle Weight</div>
+                <div class="v-number2">:</div>
+                <div class="v-number3"><strong>1015 Kg</strong></div>  
+                <div style="clear:both;"></div>      
+            </div>
+        </div>
+        <div>
+        	<input type="button" class="allow-btn" value="ALLOW" ng-click="AllowButton()"/>
+        </div>
+        <div class="or">---------------------- OR -------------------</div>
+        <div>
+        	<input type="button" class="report-btn" value="REPORT" ng-click="ReportButton()" />
+        </div>
+        <div style="height:50px;"></div>
+        <div ng-show="NOTTOLLERED">
+        	<input type="checkbox" name="notToller" ng-model="notToller"/> <div><strong>NOT TOLLRED / NO TRIP</strong></div>
+        </div>
+        <div class="or">------------ TOLLRED ERROR ------------</div>
+        <div>
+        	<input type="checkbox" ng-model="vechAxel" /> <lable><strong>Wrong Axel</strong></lable>
+        </div>
+        <div style="height:20px;"></div>
+        <div>
+        	<input type="checkbox" ng-model="vechWeight"/> <lable><strong>Wrong Weight</strong></lable>
+        </div>
+        <div style="height:20px;"></div>
+        <div>
+        	<input type="checkbox" ng-model="notCT"/> <lable><strong>Not Created trip</strong></lable>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+</div>
+<script type="application/javascript" src="js/Config.js"></script>
+<script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="application/javascript" src="js/angular-1.5.5/angular.js"></script>
+<script type="application/javascript" src="js/angular-1.5.5/angular-animate.min.js"></script>
+<script type="application/javascript" src="js/angular-1.5.5/angular-cookies.js"></script>
+<script type="application/javascript" src="js/Controllers/HomeCtrl.js"></script>
+<script type="application/javascript" src="js/webcam.min.js"></script>
+<script type="application/javascript" src="js/ngcam/directive.js"></script>
+
+</body>
+</html>

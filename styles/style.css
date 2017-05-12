@@ -1,0 +1,348 @@
+body {
+	margin:0;
+}
+/*-------------------FONT CSS ------------------------------*/
+@font-face {
+  font-family: 'GLight';
+  src: url('../fonts/Gotham-Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Gotham-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Gotham-Light.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/Gotham-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/Gotham-Light.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'GBook';
+  src: url('../fonts/Gotham-Book.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Gotham-Book.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Gotham-Book.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/Gotham-Book.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/Gotham-Book.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'GBold';
+  src: url('../fonts/Gotham-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Gotham-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Gotham-Bold.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/Gotham-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/Gotham-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+/*-------------------FONT CSS ------------------------------*/
+#header {
+	background:#3c3c3c;
+	padding:15px 30px 10px 30px;
+	height: 70px;
+	border-bottom:#ff9600 solid 3px;
+}
+#vehicles-list-panel {	
+	height:600px;
+	background:#f0f0f0;
+	width:70%;	
+	float:left;
+}
+.vehicles-list-heading {	
+	background:#e0e0e0;
+	border-bottom:#d0d0d0 solid 1px
+}
+.vehicles-list {	
+	padding:24px 30px 10px 30px;
+}
+.vehicles-list-th {	
+	padding:0 30px 10px 30px;
+}
+.all-vehicles {
+	overflow: auto; max-height:430px; width:96%;
+}
+.vehicles-list h1 {
+	display:inline-block;
+	font-family:GLight;
+	font-size:28px;
+	color:#252525;
+	margin:0;
+}
+.vehicles-list .txt-fld {
+	display:inline-block;
+	font-family:GLight;
+	font-size:18px;
+	color:#737373;
+	padding:10px;
+	width:210px;	
+	/* background:url(../images/search-icon.png) no-repeat right #FFF; */
+	border:#aeaeae solid 1px;
+}
+#information-panel {
+	height:560px;
+	background:#3c3c3c;
+	width:30%;
+	float:right;
+	box-shadow: inset 3px 0 0 0 #f7f7f7;	
+}
+.logo {
+	width:100px;
+	float:left;
+}
+.info {
+	width:55%;
+	float:left;
+	padding-left:150px;
+	font-family:GLight;
+	font-size:16px;
+	color:#fff;
+	text-align:right;
+	line-height:22px;
+}
+.particulars {
+	display:inline-block;
+	width:120px;
+}
+.timeandlogin {
+	width:15%;
+	float:right;
+	padding-left:20px;
+	margin-top:10px;
+	border-left:#979797 solid 1px;
+}
+.timeanddate {
+	width:70%;
+	float:left;
+}
+.timeanddate .date {
+	font-family:GLight;
+	font-size:16px;
+	color:#fff;
+}
+.timeanddate .time {
+	font-family:GLight;
+	font-size:25px;
+	color:#fff;
+}
+.login {
+	width:30%;
+	float:right;
+}
+.cam-feed {
+	margin-left:3px;
+}
+.information {
+	margin-left:3px;
+	padding:20px;
+	font-family:GLight;
+	font-size:16px;
+	border-top:#ff9600 solid 3px;
+	color:#d2d2d2;
+	background: #3c3c3c none repeat scroll 0 0;
+	overflow: auto; max-height:300px;
+
+}
+.information div strong{
+	font-size:15px;
+	color:#fff;
+}
+.vehicles-list-header{
+	font-family:GBook;
+	font-size:17px;
+	height:24px;
+	padding-top:10px;
+	border-bottom:#666 solid 2px;
+}
+.vehicles-list-header-data{
+	width:32%;
+	float:left;
+}
+.vehicles-list-content{
+	font-family:GBold;
+	font-size:17px;
+	height:72px;
+	border-bottom:#666 solid 1px;
+}
+.vehicles-list-content-data{
+	width:32%;
+	float:left;
+	padding-top:30px;
+}
+.vehicles-list-content-image{
+	width:32%;
+	float:left;
+	padding-top:14px;
+}
+.v-number1 {
+	width:40%;
+	float:left;
+}
+.v-number2 {
+	width:10%;
+	float:left;
+}
+.v-number3 {
+	width:50%;
+	float:left;
+}
+.info-block {
+	padding:8px 0 8px 0;
+}
+.ali-left {
+	text-align:left;
+	padding-left:3px;
+}
+.ali-right{
+	text-align:right;
+	padding-right:3px;
+}
+.allow-btn {
+	width:250px;
+	height:48px;	
+	background:#548f00 url(../images/allow-icon.png) no-repeat right ;		
+	border:#fff solid 1px;
+	font-family:GBold;
+	font-size:26px;
+	letter-spacing:2px;
+	color:#fff;
+	text-align:left;
+	padding-left:14px;
+}
+.allow-btn:hover {		
+	background:#416f00 url(../images/allow-icon.png) no-repeat right;
+}
+.report-btn {
+	width:250px;
+	height:48px;	
+	background:#e80000 url(../images/report-icon.png) no-repeat right ;		
+	border:#fff solid 1px;
+	font-family:GBold;
+	font-size:26px;
+	letter-spacing:2px;
+	color:#fff;
+	text-align:left;
+	padding-left:14px;
+}
+.report-btn:hover {		
+	background:#be0000 url(../images/report-icon.png) no-repeat right;
+}
+.or{
+	padding:25px 0 25px 0;
+}
+.info-pad{
+	padding:0 0 30px 0;
+}
+
+/*     login screen     */
+.inpTxt {
+	height:30px;
+	width:90%;
+	font-family:GLight;
+	color:#999;
+	font-size:18px;
+	margin:4px 0 4px 0;
+	text-align:center;
+}
+.subm{
+	display:inline-block;
+	font-family:GLight;
+	font-size:18px;
+	color:#000;
+	padding:10px;
+	width:100px;	
+	background:#ff9600;
+	border:#aeaeae solid 1px;
+}
+.inpBtn {
+	width:92%;
+	background:url(../images/btnBg.png) repeat-x;
+	height:38px;
+	font-family:GLight;
+	color:#000;
+	font-size:18px;
+	margin-top:20px;
+	border:#CCC 1px solid;
+}
+.inpFrm {
+	margin-top:50px; background:#444444; padding:30px;
+}
+.check-box{
+	background:url(../images/check-box.png) no-repeat 0 0;
+	height:32px;
+	width:32px;
+}
+input[type='checkbox'] {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+	width:32px;
+	height:32px;
+}
+.frmBox {
+	width:30%; 
+	height:500px; 
+	top: 50px; 
+	
+	margin: auto; 
+	position: absolute; 
+	left: 0; 
+	right: 0; 
+	text-align:center;
+}
+
+.login {
+	/*//width:30%;
+	//float:right;*/
+	position: absolute;
+	padding:0px 30px 10px 30px;
+	height:100px;
+	left:90.5%;
+	width:6%;
+	top:0;
+}
+
+
+.login > img{
+	margin-top:26%;
+	margin-left:20%;
+}
+
+.login:hover{
+	background: black none repeat scroll 0% 0%;
+}
+
+
+.profile-slide-down{
+	position: absolute;
+	right: 0px;
+	background: black none repeat scroll 0% 0%;
+	height: 200px;
+	top: 95px;
+	width: 18%;
+	display: none;
+	z-index: 3;
+
+}
+.login:hover ~ .profile-slide-down {
+	display: block;
+}
+
+.profile-slide-down:hover {
+	display: block;
+}
+
+.profile-slide-down:hover ~ .login {
+	background: black none repeat scroll 0% 0%;
+}
+.profile-slide-down > span {
+	display: inline-block;
+	height: 30px;
+	width: 100%;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	margin-top: 50px;
+}
+
+
+
+.profile-slide-down > span > .button{
+	font-family: "GLight";
+	font-size: 15px;
+	text-align: center;
+	background-color: #444 !important;
+	padding: 5px;
+	cursor:pointer;
+}

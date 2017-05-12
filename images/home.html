@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="Tollr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>TOLLR</title>
+    <link href="styles/style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .ng-camera-stack {
+            position: relative;
+        }
+        .ng-camera-overlay {
+            left: 0;
+            position: absolute;
+            top: 0;
+            z-index: 2;
+        }
+        .ng-camera-countdown{
+            display: none;
+        }
+    </style>
+</head>
+<body ng-controller="HomeController as vm">
+<!--<div ng-show="false" ng-cloak>
+    <div><img src="images/bg.jpg" width="100%" height="100%"/></div>
+    <div class="frmBox">
+        <div><img src="images/logoBig.png"/></div>
+        <div class="inpFrm">
+            <form name="user">
+                <input type="text" placeholder="Employee Id " class="inpTxt" ng-model="user.employee_id"/>
+                <input type="password" placeholder="Password" class="inpTxt" ng-model="user.password"/>
+                <input type="button" class="inpBtn" value="Login" ng-click='loginS(user)'/>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>-->
+<div class="list-view" ng-hide="list" ng-cloak>
+
+    <div id="header">
+        <div class="logo"><img src="images/logo.png" width="96" height="42"/></div>
+        <div class="info">
+            <ul>
+                <li><span class="particulars">Road Name</span><span toll-particulars="roadname"
+                                                                    ng-cloak>: {{RoadName}}</span></li>
+                <li><span class="particulars">Toll Name</span><span toll-particulars="tollname"
+                                                                    ng-cloak>: {{TollName}}</span></li>
+                <li><span class="particulars">Toll Gate ID </span><span toll-particulars="tollid"
+                                                                        ng-cloak>: {{TollID}}</span></li>
+
+            </ul>
+            <ul>
+                <li><span class="particulars">Towards</span><span toll-particulars="towords"
+                                                                  ng-cloak>: {{Towords}}</span></li>
+                <li><span class="particulars">Concessioner</span><span toll-particulars="concessioner" ng-cloak>: {{Concessioner}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="timeandlogin" ng-controller="Ctrl2">
+            <div class="timeanddate"><span class="date" my-current-time="dateformat"></span><br/><span class="time"
+                                                                                                       my-current-time="format"></span>
+            </div>
+            <div class="login" ng-style="{'background-color':logincolor}" set-class-when-at-top="fix-to-top"><img src="images/user.png" width="48"
+                                                                               height="47"/></div>
+            <div class="profile-slide-down" ng-mouseenter="changeColor('black')" ng-mouseleave="changeColor('')">
+                <span class="time" ng-cloak>{{username}}</span>
+                <span><span class="button" ng-click="signOut()">SIGN OUT</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="vehicles-list-panel">
+        <div class="vehicles-list">
+            <div><span><h1>Arriving Vehicles List</h1></span> <span style="float:right;"><form><input class="txt-fld"
+                                                                                                      name=""
+                                                                                                      placeholder="Enter Vehicle Number"
+                                                                                                      type="text"
+                                                                                                      ng-model="search"
+                                                                                                      ng-change="searchVechical(s)"/>
+            </form>
+            </span>
+            </div>
+        </div>
+        <div class="vehicles-list">
+            <table cellpadding="0" cellspacing="0" class="table-one">
+                <thead>
+                <tr>
+                    <th>Vehicle No.</th>
+                    <th>Vehicle Type</th>
+                    <th>Trip Type</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in listcars" ng-click="showDetails(x)">
+                    <td><span class="v-number">{{x.registration_no}}</span></td>
+                    <td class="vehical-image-td"><img src="images/{{vehicalImage(x.vechical_types_id)}}"/><span><!-({{x.vechical_types_id}})--></span>
+                    </td>
+                    <td><img src="images/{{x.trip_image}}"/></td>
+                    <td><input type="button" class="approve-btn" ng-click="changeStatus(x)"/></td>
+                </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="information-panel">
+        <div class="cam-feed" >
+            <ng-camera
+                    capture-message="Cheeeese!"
+                    output-height="160"
+                    output-width="213"
+                    viewer-height="320"
+                    viewer-width="426"
+                    image-format="jpeg"
+                    jpeg-quality="100"
+                    action-message="Take picture"
+                    snapshot="vm.picture"
+                    flash-fallback-url="js/webcam.swf"
+                    overlay-url="images/overlay.png"
+                    shutter-url="images/shutter.mp3"
+            ></ng-camera>
+            <!-- for cropping:
+                crop-height="90"
+                crop-width="120"
+            -->
+
+
+        </div>
+       <!-- <button ng-click="cameraShot()">Camera Shot</button>-->
+        <div class="information" ng-hide="userdetails">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td colspan="2"><strong>Details</strong></td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Vehicle No :</td>
+                    <td class="ali-left">{{userdetail.registration_no}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Owner Name :</td>
+                    <td class="ali-left">{{userdetail.owner_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Vehicle User :</td>
+                    <td class="ali-left">{{userdetail.user_name}} <img src="images/tollr-user-icon.png" width="18"
+                                                                  height="18"/></td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Phone :</td>
+                    <td class="ali-left">{{userdetail.mobile_number}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" class="info-button button-green" value="ALLOW" ng-click="changeStatus(userdetail)"/></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="information" ng-hide="userdetails2">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td colspan="2"><strong>Details</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2">Already Registered user forgot to create trip</td>
+                </tr>
+                <tr>
+                    <td class="ali-right" width="45%">Vehicle No :</td>
+                    <td class="ali-left">{{userdetail.registration_no}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Owner Name :</td>
+                    <td class="ali-left">{{userdetail.owner_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Vehicle User :</td>
+                    <td class="ali-left">{{userdetail.user_name}} <img src="images/tollr-user-icon.png" width="18"
+                                                                  height="18"/></td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Phone :</td>
+                    <td class="ali-left">{{userdetail.mobile_number}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" class="info-button button-orange" value="ALLOW"/></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="information wrongentry" ng-hide="wrongentry3">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <thead>
+                <tr>
+                    <th colspan="2"><strong>Wrong Entry (More then twice)</strong></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td colspan="2">This vechical is not registerd with Tollr.</td>
+
+                </tr>
+                <tr>
+                    <td class="ali-right" width="45%">Vehicle No :</td>
+                    <td class="ali-left">{{vioadd2[0].vehical_no}}</td>
+                <tr>
+                    <td class="ali-right">Owner Name :</td>
+                    <td class="ali-left">{{vioadd2[0].owner_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Phone :</td>
+                    <td class="ali-left">{{vioadd2[0].phone}}</td>
+                </tr>
+                </tr>
+
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="3" class="table-right-info" ng-repeat="y in vioadd2">
+
+                <tr>
+                    <td class="ali-right">Date & Time :</td>
+                    <td class="ali-left">{{y.created_on}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Toll Name :</td>
+                    <td class="ali-left">{{y.toll.toll_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Road Name :</td>
+                    <td class="ali-left">{{y.toll.motorway_id}}</td>
+                </tr>
+
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="line-height: 30px">
+                    <td colspan="2">
+                        <input type="button" class="info-button button-orange" value="PENALITY" ng-click="violationAdd(vioadd)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="information wrongentry" ng-hide="wrongentry2">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <thead>
+                <tr>
+                    <th colspan="2"><strong>Wrong Entry (2nd Time)</strong></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td colspan="2">This vechical is not registerd with Tollr</td>
+
+                </tr>
+                <tr>
+                    <td class="ali-right" width="45%">Vehicle No :</td>
+                    <td class="ali-left">{{vioadd.vehical_no}}</td>
+                </tr>
+
+                <tr>
+                    <td class="ali-right">Owner Name :</td>
+                    <td class="ali-left">{{vioadd.owner_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Phone :</td>
+                    <td class="ali-left">{{vioadd.phone}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Date & Time :</td>
+                    <td class="ali-left">{{vioadd.created_on}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Toll Name :</td>
+                    <td class="ali-left">{{vioadd.toll.toll_name}}</td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Road Name :</td>
+                    <td class="ali-left">{{vioadd.toll.motorway_id}}</td>
+                </tr>
+                <!--<tr>
+                    <td class="ali-right">Towords :</td>
+                    <td class="ali-left">{{vioadd2.boothside.boothside_from}}</td>
+                </tr>-->
+
+                <tr>
+                    <td class="ali-right">Concessioner :</td>
+                    <td class="ali-left">{{vioadd.tolldetails.toll_concessionaire}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="line-height: 30px">
+                    <td colspan="2">
+                        <input type="button" class="info-button button-orange" value="PENALITY" ng-click="violationAdd(vioadd)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="information wrongentry" ng-hide="wrongentry1">
+            <form >
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                <thead>
+                <tr>
+                    <th colspan="2"><strong>Wrong Entry</strong></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td colspan="2">This vechical is not registerd with Tollr</td>
+
+                </tr>
+                <tr>
+                    <td class="ali-right" width="45%">Vehicle No :</td>
+                    <td class="ali-left"><input class="inpTxt" name="vehical_no" ng-model="vioadd.vehical_no"/></td>
+                </tr>
+                <!--<tr>
+                    <td class="ali-right" width="45%">Vehicle Type :</td>
+                    <td class="ali-left">
+                        <select class="inpTxt" name="vehical_type" ng-model="vioadd.vehical_types">
+                            <option ng-repeat="v in vehical_types" value="{{v.vechical_types_id}}" ng-bind>{{v.type}}</option>
+                        </select>
+
+                    </td>
+                </tr>-->
+                <tr>
+                    <td class="ali-right">Owner Name :</td>
+                    <td class="ali-left"><input class="inpTxt" ng-model="vioadd.owner_name"/></td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Vehicle User :</td>
+                    <td class="ali-left"><input class="inpTxt" ng-model="vioadd.user_name"/></td>
+                </tr>
+                <tr>
+                    <td class="ali-right">Phone :</td>
+                    <td class="ali-left"><input class="inpTxt" ng-model="vioadd.phone"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr style="line-height: 30px">
+                    <td colspan="2">
+                        <input type="button" class="info-button button-orange" value="ADD" ng-click="violationAdd(vioadd)"/>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<script type="application/javascript" src="Config.js"></script>
+<script type="application/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="application/javascript" src="js/angular-1.4.8/angular.js"></script>
+<script type="application/javascript" src="js/webcam.min.js"></script>
+<script type="application/javascript" src="js/home.js"></script>
+<script type="application/javascript" src="js/ngcam/directive.js"></script>
+</body>
+</html>
